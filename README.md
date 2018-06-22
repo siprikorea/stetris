@@ -1,1 +1,1 @@
-# stetris-javascript
+# stetris c++
