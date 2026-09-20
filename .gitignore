@@ -3,6 +3,8 @@
 cpp/app/console/stetris
 cpp/test/logictest
 
+javascript/app/web/dist/
+
 # Java
 java/out/
 *.class

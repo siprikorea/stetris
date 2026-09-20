@@ -9,4 +9,7 @@ console:
 web:
 	$(NODE) app/web/serve.js
 
-.PHONY: test console web
+dist:
+	$(NODE) app/web/build.js
+
+.PHONY: test console web dist

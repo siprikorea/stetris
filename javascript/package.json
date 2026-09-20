@@ -8,6 +8,7 @@
   "scripts": {
     "test": "node test/logictest.js",
     "console": "node app/console/main.js",
-    "web": "node app/web/serve.js"
+    "web": "node app/web/serve.js",
+    "dist": "node app/web/build.js"
   }
 }
