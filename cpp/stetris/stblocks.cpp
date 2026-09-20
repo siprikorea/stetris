@@ -1,7 +1,12 @@
 #include "stblocks.h"
 
+// Definitions for the in class constants, needed before C++17
+const int StBlocks::COUNT;
+const int StBlocks::ROTATIONS;
+const int StBlocks::SIZE;
+
 // blocks
-ST_BLOCK g_StBlocks[ST_MAX_BLOCK_CNT] = {
+ST_BLOCK g_StBlocks[StBlocks::COUNT] = {
 	{
 		3, 3,
 		{

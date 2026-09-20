@@ -5,7 +5,7 @@
 /************************************************************
  *  @brief      Constructor
  *  @param[in]  pBoard          Board
- *  @param[in]  nType           Block type (1 ~ ST_MAX_BLOCK_CNT)
+ *  @param[in]  nType           Block type (1 ~ StBlocks::COUNT)
  *  @retval     Nothing
  ************************************************************/
 CStBlock::CStBlock(CStBoard* pBoard, int nType)
@@ -16,13 +16,13 @@ CStBlock::CStBlock(CStBoard* pBoard, int nType)
 
 /************************************************************
  *  @brief      Reset to the spawn position with the given type
- *  @param[in]  nType           Block type (1 ~ ST_MAX_BLOCK_CNT)
+ *  @param[in]  nType           Block type (1 ~ StBlocks::COUNT)
  *  @retval     Nothing
  ************************************************************/
 void CStBlock::Reset(int nType)
 {
     // Clamp the type so an out of range value cannot index past the table
-    if (nType < 1 || nType > ST_MAX_BLOCK_CNT)
+    if (nType < 1 || nType > StBlocks::COUNT)
         nType = 1;
 
     // Type
@@ -110,10 +110,10 @@ int CStBlock::GetYPos()
  ************************************************************/
 int CStBlock::GetCell(int nX, int nY)
 {
-    if (nX < 0 || nX >= ST_MAX_BLOCK_X)
+    if (nX < 0 || nX >= StBlocks::SIZE)
         return 0;
 
-    if (nY < 0 || nY >= ST_MAX_BLOCK_Y)
+    if (nY < 0 || nY >= StBlocks::SIZE)
         return 0;
 
     return m_Block[nY][nX];
@@ -127,9 +127,9 @@ int CStBlock::GetCell(int nX, int nY)
 bool CStBlock::Rotate()
 {
     // Set temp rotation
-    int nTempRotation = (m_Rotation + 1) % ST_MAX_BLOCK_ROT;
+    int nTempRotation = (m_Rotation + 1) % StBlocks::ROTATIONS;
     // Set temp block
-    int TempBlock[ST_MAX_BLOCK_Y][ST_MAX_BLOCK_X];
+    int TempBlock[StBlocks::SIZE][StBlocks::SIZE];
     memcpy(TempBlock, &g_StBlocks[m_Type-1].block[nTempRotation], sizeof(TempBlock));
 
     // Wall kick - try in place first, then nudge left and right.
@@ -252,7 +252,7 @@ bool CStBlock::CanPlace()
  *  @retval     true            Fits
  *  @retval     false           Does not fit
  ************************************************************/
-bool CStBlock::Fits(int nMoveX, int nMoveY, int MoveBlock[ST_MAX_BLOCK_Y][ST_MAX_BLOCK_X])
+bool CStBlock::Fits(int nMoveX, int nMoveY, int MoveBlock[StBlocks::SIZE][StBlocks::SIZE])
 {
     // Get board size
     int nBoardXSize = m_pBoard->GetXSize();
@@ -260,9 +260,9 @@ bool CStBlock::Fits(int nMoveX, int nMoveY, int MoveBlock[ST_MAX_BLOCK_Y][ST_MAX
 
     // Scan the whole shape, not just m_XSize * m_YSize - the shape being
     // tested may be a rotation that reaches further than the current one
-    for (int nBlockY = 0; nBlockY < ST_MAX_BLOCK_Y; nBlockY++)
+    for (int nBlockY = 0; nBlockY < StBlocks::SIZE; nBlockY++)
     {
-        for (int nBlockX = 0; nBlockX < ST_MAX_BLOCK_X; nBlockX++)
+        for (int nBlockX = 0; nBlockX < StBlocks::SIZE; nBlockX++)
         {
             // Check if block is empty
             if (!MoveBlock[nBlockY][nBlockX])

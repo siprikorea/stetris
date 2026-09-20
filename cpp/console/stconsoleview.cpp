@@ -134,7 +134,7 @@ void CStConsoleView::DrawBoard(CStPlay& play)
     int nYSize = pBoard->GetYSize();
 
     // Merge the board and the current block into one buffer
-    int Screen[ST_MAX_BOARD_Y][ST_MAX_BOARD_X];
+    int Screen[CStBoard::Y_SIZE][CStBoard::X_SIZE];
     for (int nBoardY = 0; nBoardY < nYSize; nBoardY++)
     {
         for (int nBoardX = 0; nBoardX < nXSize; nBoardX++)
@@ -224,7 +224,7 @@ void CStConsoleView::DrawSide(CStPlay& play, int nLine)
             // position of the next block is irrelevant here
             CStBlock* pNext = play.GetNextBlock();
             int nBlockY = nLine - 1;
-            for (int nBlockX = 0; nBlockX < ST_MAX_BLOCK_X; nBlockX++)
+            for (int nBlockX = 0; nBlockX < StBlocks::SIZE; nBlockX++)
                 PutCell(pNext->GetCell(nBlockX, nBlockY) ? pNext->GetType() : 0);
         }
         break;

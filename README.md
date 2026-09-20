@@ -50,6 +50,9 @@ spelling it the way its language would - `GetCell`, `getCell`, `get_cell`:
 | `board` `currentBlock` `nextBlock` | state to draw |
 | `score` `highScore` `level` `lines` | state to draw |
 
+The constants match too: `Board.X_SIZE` and `Board.Y_SIZE` for the well,
+`Blocks.COUNT`, `Blocks.ROTATIONS` and `Blocks.SIZE` for the shapes.
+
 ```js
 const play = new Play();
 play.newGame(seed);

@@ -25,6 +25,9 @@ while (!play.IsGameOver())
 }
 ```
 
+The constants are grouped rather than left as loose macros, so they read
+the way the ports do: `CStBoard::X_SIZE`, `StBlocks::COUNT`.
+
 ## Layout
 
 ```

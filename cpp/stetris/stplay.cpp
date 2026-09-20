@@ -440,11 +440,11 @@ void CStPlay::ChangeBlock()
 
 /************************************************************
  *  @brief      Pick a random block type
- *  @retval     Block type (1 ~ ST_MAX_BLOCK_CNT)
+ *  @retval     Block type (1 ~ StBlocks::COUNT)
  ************************************************************/
 int CStPlay::NextBlockType()
 {
-    return m_Random.NextRange(1, ST_MAX_BLOCK_CNT);
+    return m_Random.NextRange(1, StBlocks::COUNT);
 }
 
 /************************************************************

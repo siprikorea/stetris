@@ -1,12 +1,14 @@
 #ifndef __STBOARD_H__
 #define __STBOARD_H__
 
-#define ST_MAX_BOARD_X 10
-#define ST_MAX_BOARD_Y 20
-
 class CStBoard
 {
 public:
+    // Width of the board in cells
+    static const int X_SIZE = 10;
+    // Height of the board in cells
+    static const int Y_SIZE = 20;
+
     // Constructor
     CStBoard();
 
@@ -23,12 +25,8 @@ public:
     void SetValue(int nX, int nY, int nValue);
 
 private:
-    // X Size
-    int m_XSize;
-    // Y Size
-    int m_YSize;
     // Board
-    int m_Board[ST_MAX_BOARD_Y][ST_MAX_BOARD_X];
+    int m_Board[Y_SIZE][X_SIZE];
 };
 
 #endif

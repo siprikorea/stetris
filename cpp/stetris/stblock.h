@@ -1,11 +1,8 @@
 #ifndef __STBLOCK_H__
 #define __STBLOCK_H__
 
-#define ST_MAX_BLOCK_ROT 4
-#define ST_MAX_BLOCK_X 4
-#define ST_MAX_BLOCK_Y 4
-
 #include "stboard.h"
+#include "stblocks.h"
 
 class CStBlock
 {
@@ -45,7 +42,7 @@ public:
     // Check if the block fits at its current position
     bool CanPlace();
     // Check bounds
-    bool Fits(int nMoveX, int nMoveY, int MoveBlock[ST_MAX_BLOCK_Y][ST_MAX_BLOCK_X]);
+    bool Fits(int nMoveX, int nMoveY, int MoveBlock[StBlocks::SIZE][StBlocks::SIZE]);
 
 protected:
     // Board
@@ -63,7 +60,7 @@ protected:
     // Rotation
     int m_Rotation;
     // Block
-    int m_Block[ST_MAX_BLOCK_Y][ST_MAX_BLOCK_X];
+    int m_Block[StBlocks::SIZE][StBlocks::SIZE];
 };
 
 #endif 

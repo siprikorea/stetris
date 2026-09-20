@@ -1,15 +1,15 @@
 #include "stboard.h"
 
+// Definitions for the in class constants, needed before C++17
+const int CStBoard::X_SIZE;
+const int CStBoard::Y_SIZE;
+
 /************************************************************
  *	@brief		Constructor
  *	@retval		Nothing
  ************************************************************/
 CStBoard::CStBoard()
 {
-    // X Size
-    m_XSize = ST_MAX_BOARD_X;
-    // Y Size
-    m_YSize = ST_MAX_BOARD_Y;
     // Clear
     Clear();
 }
@@ -20,9 +20,9 @@ CStBoard::CStBoard()
  ************************************************************/
 void CStBoard::Clear()
 {
-	for (int nBoardY = 0; nBoardY < m_YSize; nBoardY++)
+	for (int nBoardY = 0; nBoardY < Y_SIZE; nBoardY++)
 	{
-		for (int nBoardX = 0; nBoardX < m_XSize; nBoardX++)
+		for (int nBoardX = 0; nBoardX < X_SIZE; nBoardX++)
 		{
 			m_Board[nBoardY][nBoardX] = 0;
 		}
@@ -35,7 +35,7 @@ void CStBoard::Clear()
  ************************************************************/
 int CStBoard::GetXSize()
 {
-    return m_XSize;
+    return X_SIZE;
 }
 
 /************************************************************
@@ -44,7 +44,7 @@ int CStBoard::GetXSize()
  ************************************************************/
 int CStBoard::GetYSize()
 {
-    return m_YSize;
+    return Y_SIZE;
 }
 
 /************************************************************
@@ -53,10 +53,10 @@ int CStBoard::GetYSize()
  ************************************************************/
 int CStBoard::GetValue(int nX, int nY)
 {
-	if (nX < 0 || nX >= ST_MAX_BOARD_X)
+	if (nX < 0 || nX >= X_SIZE)
 		return 0;
 
-	if (nY < 0 || nY >= ST_MAX_BOARD_Y)
+	if (nY < 0 || nY >= Y_SIZE)
 		return 0;
 
     return m_Board[nY][nX];
@@ -68,10 +68,10 @@ int CStBoard::GetValue(int nX, int nY)
  ************************************************************/
 void CStBoard::SetValue(int nX, int nY, int nValue)
 {
-	if (nX < 0 || nX >= ST_MAX_BOARD_X)
+	if (nX < 0 || nX >= X_SIZE)
 		return;
 
-	if (nY < 0 || nY >= ST_MAX_BOARD_Y)
+	if (nY < 0 || nY >= Y_SIZE)
 		return;
 
     m_Board[nY][nX] = nValue;
