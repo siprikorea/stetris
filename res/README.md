@@ -1,13 +1,28 @@
 # Resources
 
-Kept from the old MFC UI for a future graphical front end. Nothing in the
-project reads these files today; the console UI draws with text.
-
 | file | format | notes |
 | --- | --- | --- |
+| `stetris.ico` | 16, 32, 48, 64, 128, 256 | application icon |
+| `stetris_icon.png` | 256 x 256, RGBA | the same icon as a plain image |
 | `stetris_block.bmp` | 192 x 24, 24 bit | sprite sheet, eight 24 x 24 tiles |
-| `stetris_background.bmp` | 1024 x 768, 24 bit | window background |
-| `stetris.ico` | 13 icons, 48x48 down to 16x16 | application icon |
+| `make_icon.py` | | regenerates the two icon files |
+
+Nothing in the project reads these today; the console UI draws with text.
+They are here for a future graphical front end.
+
+## Icon
+
+The icon is the S block from `src/stblocks.cpp` on a rounded dark tile.
+It is generated, not hand drawn, so the colours and sizes can be changed
+in one place:
+
+```sh
+python3 res/make_icon.py
+```
+
+The script uses the standard library only. The 128 and 256 entries inside
+the `.ico` are PNG compressed, which Windows Vista and later read and which
+keeps the file at 37 KB instead of 361 KB.
 
 ## Block sheet
 

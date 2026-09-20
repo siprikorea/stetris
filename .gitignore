@@ -3,6 +3,10 @@
 build/console/stetris
 test/stlogictest
 
+# Python
+__pycache__/
+*.pyc
+
 # Editor and tooling
 .idea/
 .omc/
