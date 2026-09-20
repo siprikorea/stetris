@@ -1,6 +1,6 @@
 # stetris - Java
 
-A port of the game logic in `src/`. Logic only: no UI, and nothing here
+A port of the game logic in `cpp/`. Logic only: no UI, and nothing here
 reads a keyboard, a clock or a file.
 
 ```sh

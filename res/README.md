@@ -12,7 +12,7 @@ They are here for a future graphical front end.
 
 ## Icon
 
-The icon is the S block from `src/stblocks.cpp` on a rounded dark tile.
+The icon is the S block from `cpp/stblocks.cpp` on a rounded dark tile.
 It is generated, not hand drawn, so the colours and sizes can be changed
 in one place:
 
@@ -28,7 +28,7 @@ keeps the file at 37 KB instead of 361 KB.
 
 The tiles are laid out in one row and indexed by the cell value that
 `CStBoard::GetValue()` returns, so tile 0 is the empty cell and tiles 1 to 7
-are the block types in the order of `g_StBlocks` in `src/stblocks.cpp`:
+are the block types in the order of `g_StBlocks` in `cpp/stblocks.cpp`:
 
 ```
  index   0      1      2      3      4      5      6      7

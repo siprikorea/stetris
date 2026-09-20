@@ -2,7 +2,7 @@
 
 Tetris written in C++.
 
-`src/` is the game and nothing else. It has no reference to any UI, no
+`cpp/` is the game and nothing else. It has no reference to any UI, no
 terminal or window code, no global `rand()`, and no file or clock access.
 A UI drives it and reads its state back:
 
@@ -22,7 +22,7 @@ Because the seed is supplied by the caller, a given seed always replays the
 same game, so the logic can be tested with no UI at all.
 
 ```
-src/                game logic in C++ (board, block, play, score, random)
+cpp/                game logic in C++ (board, block, play, score, random)
 build/console/      terminal UI (macOS / Linux / Windows)
 test/               logic tests, no UI linked
 java/               the same logic in Java
