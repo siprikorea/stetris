@@ -1,7 +1,7 @@
 /**
  * Block shapes, one entry per type, four rotations each.
  *
- * Generated from cpp/stblocks.cpp by the table extractor, do not edit by
+ * Generated from cpp/stetris/stblocks.cpp by the table extractor, do not edit by
  * hand. The shapes are the single source of truth for every port.
  */
 

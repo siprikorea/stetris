@@ -21,10 +21,18 @@ while (!play.IsGameOver())
 Because the seed is supplied by the caller, a given seed always replays the
 same game, so the logic can be tested with no UI at all.
 
+Every language folder has the same shape:
+
 ```
-cpp/                game logic in C++ (board, block, play, score, random)
-cpp/console/        terminal UI (macOS / Linux / Windows)
-cpp/test/           logic tests, no UI linked
+<lang>/Makefile      make test
+<lang>/README.md
+<lang>/stetris/      the logic
+<lang>/test/        the tests, which link the logic alone
+```
+
+```
+cpp/                C++, and the only front end
+cpp/console/          terminal UI (macOS / Linux / Windows)
 java/               the same logic in Java
 python/             the same logic in Python
 javascript/         the same logic in JavaScript
@@ -39,18 +47,18 @@ table of seeds against the same expected scores, so a change to the rules in
 one place shows up as a failure in the others.
 
 ```sh
-cd cpp/test    && make test   # C++
-cd java        && make test   # Java
-cd python      && make test   # Python
-cd javascript  && make test   # JavaScript
+cd cpp        && make test   # C++
+cd java       && make test   # Java
+cd python     && make test   # Python
+cd javascript && make test   # JavaScript
 ```
 
 ## Build and run
 
 ```sh
-cd cpp/console
-make
-./stetris
+cd cpp
+make console
+console/stetris
 ```
 
 | key | action |

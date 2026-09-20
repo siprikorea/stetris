@@ -5,7 +5,7 @@
  * The reference table at the bottom is shared with the C++, Java and Python
  * ports. If one of them drifts, they have stopped agreeing on the rules.
  */
-import { Play } from './stetris/index.js';
+import { Play } from '../stetris/index.js';
 
 let failures = 0;
 

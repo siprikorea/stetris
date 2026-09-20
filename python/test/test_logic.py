@@ -6,6 +6,10 @@ one of them drifts, the three have stopped agreeing on the rules.
 """
 
 import sys
+from pathlib import Path
+
+# The package sits next to this folder, not inside it
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from stetris import Play
 

@@ -15,8 +15,8 @@ all: $(OUT)/.built
 test: $(OUT)/.built
 	$(JAVA) -cp $(OUT) LogicTest
 
-$(OUT)/.built: $(SOURCES) LogicTest.java
-	$(JAVAC) -Xlint:all -d $(OUT) $(SOURCES) LogicTest.java
+$(OUT)/.built: $(SOURCES) test/LogicTest.java
+	$(JAVAC) -Xlint:all -d $(OUT) $(SOURCES) test/LogicTest.java
 	@touch $@
 
 clean:

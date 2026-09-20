@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate the application icon.
 
-Draws the S block from cpp/stblocks.cpp on a rounded dark tile and writes
+Draws the S block from cpp/stetris/stblocks.cpp on a rounded dark tile and writes
 a multi-size .ico plus a 256px .png. Pure standard library, no Pillow.
 
     python3 res/make_icon.py
@@ -31,7 +31,7 @@ CELL_FILL = (0x3D, 0xD5, 0x68)
 CELL_LIGHT = (0x7B, 0xF0, 0x9A)
 CELL_DARK = (0x1F, 0x8C, 0x40)
 
-# The S block, as it appears in cpp/stblocks.cpp
+# The S block, as it appears in cpp/stetris/stblocks.cpp
 SHAPE = [
     (1, 0), (2, 0),
     (0, 1), (1, 1),
