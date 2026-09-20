@@ -24,6 +24,8 @@ same game, so the logic can be tested with no UI at all.
 ```
 src/                game logic (board, block, play, score, random)
 build/console/      terminal UI (macOS / Linux / Windows)
+res/                block and background images, kept for a graphical UI
+test/               logic tests, no UI linked
 ```
 
 ## Build and run
