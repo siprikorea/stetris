@@ -11,7 +11,10 @@ class CStBlock
 {
 public:
     // Constructor
-    CStBlock(CStBoard* pBoard);
+    CStBlock(CStBoard* pBoard, int nType);
+
+    // Reset to the spawn position with the given type
+    void Reset(int nType);
 
     // Get type
     int GetType();
@@ -34,9 +37,11 @@ public:
     bool MoveRight();
     // Move down
     bool MoveDown();
-    // Drop
-    void Drop();
-    
+    // Drop, returns the number of cells the block fell
+    int Drop();
+
+    // Check if the block fits at its current position
+    bool CanPlace();
     // Check bounds
     bool CheckBounds(int nMoveX, int nMoveY, int MoveBlock[ST_MAX_BLOCK_Y][ST_MAX_BLOCK_X]);
 

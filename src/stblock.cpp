@@ -1,27 +1,38 @@
-#include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include "stblock.h"
 #include "stblocks.h"
 
 /************************************************************
- *	@brief		Constructor
- *	@retval		Nothing
+ *  @brief      Constructor
+ *  @param[in]  pBoard          Board
+ *  @param[in]  nType           Block type (1 ~ ST_MAX_BLOCK_CNT)
+ *  @retval     Nothing
  ************************************************************/
-CStBlock::CStBlock(CStBoard* pBoard)
-	: m_pBoard(pBoard)
+CStBlock::CStBlock(CStBoard* pBoard, int nType)
+    : m_pBoard(pBoard)
 {
-    // Initialize random seed
-    srand((unsigned int)time(NULL));
+    Reset(nType);
+}
+
+/************************************************************
+ *  @brief      Reset to the spawn position with the given type
+ *  @param[in]  nType           Block type (1 ~ ST_MAX_BLOCK_CNT)
+ *  @retval     Nothing
+ ************************************************************/
+void CStBlock::Reset(int nType)
+{
+    // Clamp the type so an out of range value cannot index past the table
+    if (nType < 1 || nType > ST_MAX_BLOCK_CNT)
+        nType = 1;
 
     // Type
-    m_Type = (rand() % ST_MAX_BLOCK_CNT) + 1;
+    m_Type = nType;
     // X Size
     m_XSize = g_StBlocks[m_Type-1].x_size;
     // Y Size
     m_YSize = g_StBlocks[m_Type-1].y_size;
     // X Position
-    m_XPos = (pBoard->GetXSize() / 2) - (m_XSize / 2);
+    m_XPos = (m_pBoard->GetXSize() / 2) - (m_XSize / 2);
     // Y Position
     m_YPos = 0;
     // Rotation
@@ -31,8 +42,8 @@ CStBlock::CStBlock(CStBoard* pBoard)
 }
 
 /************************************************************
- *	@brief		Get type
- *	@retval		Nothing
+ *  @brief      Get type
+ *  @retval     Type
  ************************************************************/
 int CStBlock::GetType()
 {
@@ -40,8 +51,8 @@ int CStBlock::GetType()
 }
 
 /************************************************************
- *	@brief		Get X size
- *	@retval		Nothing
+ *  @brief      Get X size
+ *  @retval     X size
  ************************************************************/
 int CStBlock::GetXSize()
 {
@@ -49,8 +60,8 @@ int CStBlock::GetXSize()
 }
 
 /************************************************************
- *	@brief		Get Y size
- *	@retval		Nothing
+ *  @brief      Get Y size
+ *  @retval     Y size
  ************************************************************/
 int CStBlock::GetYSize()
 {
@@ -58,8 +69,8 @@ int CStBlock::GetYSize()
 }
 
 /************************************************************
- *	@brief		Get X position
- *	@retval		Nothing
+ *  @brief      Get X position
+ *  @retval     X position
  ************************************************************/
 int CStBlock::GetXPos()
 {
@@ -67,8 +78,8 @@ int CStBlock::GetXPos()
 }
 
 /************************************************************
- *	@brief		Get Y position
- *	@retval		Nothing
+ *  @brief      Get Y position
+ *  @retval     Y position
  ************************************************************/
 int CStBlock::GetYPos()
 {
@@ -76,23 +87,26 @@ int CStBlock::GetYPos()
 }
 
 /************************************************************
- *	@brief		Get block
- *	@retval		Nothing
+ *  @brief      Get block
+ *  @param[in]  nX              X position in the block
+ *  @param[in]  nY              Y position in the block
+ *  @retval     Cell value (0 = empty)
  ************************************************************/
 int CStBlock::GetBlock(int nX, int nY)
 {
-	if (nX < 0 || nX >= ST_MAX_BLOCK_X)
-		return 0;
+    if (nX < 0 || nX >= ST_MAX_BLOCK_X)
+        return 0;
 
-	if (nY < 0 || nY >= ST_MAX_BLOCK_Y)
-		return 0;
+    if (nY < 0 || nY >= ST_MAX_BLOCK_Y)
+        return 0;
 
     return m_Block[nY][nX];
 }
 
 /************************************************************
- *	@brief		Rotate
- *	@retval		Nothing
+ *  @brief      Rotate
+ *  @retval     true            Rotated
+ *  @retval     false           Blocked
  ************************************************************/
 bool CStBlock::Rotate()
 {
@@ -102,24 +116,36 @@ bool CStBlock::Rotate()
     int TempBlock[ST_MAX_BLOCK_Y][ST_MAX_BLOCK_X];
     memcpy(TempBlock, &g_StBlocks[m_Type-1].block[nTempRotation], sizeof(TempBlock));
 
-    // Check bounds
-    if (CheckBounds(m_XPos, m_YPos, TempBlock))
+    // Wall kick - try in place first, then nudge left and right.
+    // Without this a block can never be rotated next to a wall.
+    static const int nKicks[] = { 0, -1, 1, -2, 2 };
+
+    for (int nKick = 0; nKick < (int)(sizeof(nKicks) / sizeof(nKicks[0])); nKick++)
     {
+        int nTempXPos = m_XPos + nKicks[nKick];
+
+        // Check bounds
+        if (!CheckBounds(nTempXPos, m_YPos, TempBlock))
+        {
+            continue;
+        }
+
         // Set current rotation
-        m_Rotation = (m_Rotation + 1) % ST_MAX_BLOCK_ROT;
+        m_Rotation = nTempRotation;
+        // Set current X position
+        m_XPos = nTempXPos;
         // Set current block
         memcpy(m_Block, TempBlock, sizeof(m_Block));
         return true;
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
 }
 
 /************************************************************
- *	@brief		Move left
- *	@retval		Nothing
+ *  @brief      Move left
+ *  @retval     true            Moved
+ *  @retval     false           Blocked
  ************************************************************/
 bool CStBlock::MoveLeft()
 {
@@ -137,8 +163,9 @@ bool CStBlock::MoveLeft()
 }
 
 /************************************************************
- *	@brief		Move right
- *	@retval		Nothing
+ *  @brief      Move right
+ *  @retval     true            Moved
+ *  @retval     false           Blocked
  ************************************************************/
 bool CStBlock::MoveRight()
 {
@@ -156,8 +183,9 @@ bool CStBlock::MoveRight()
 }
 
 /************************************************************
- *	@brief		Move down
- *	@retval		Nothing
+ *  @brief      Move down
+ *  @retval     true            Moved
+ *  @retval     false           Landed
  ************************************************************/
 bool CStBlock::MoveDown()
 {
@@ -175,29 +203,38 @@ bool CStBlock::MoveDown()
 }
 
 /************************************************************
- *	@brief		Drop
- *	@retval		Nothing
+ *  @brief      Drop
+ *  @retval     Number of cells the block fell
  ************************************************************/
-void CStBlock::Drop()
+int CStBlock::Drop()
 {
-    while (1)
+    int nDistance = 0;
+
+    while (MoveDown())
     {
-        // Check bounds
-        if (CheckBounds(m_XPos, m_YPos + 1, m_Block))
-        {
-            // Set current Y position
-            m_YPos = m_YPos + 1;
-        }
-        else
-        {
-            break;
-        }
+        nDistance++;
     }
+
+    return nDistance;
 }
 
 /************************************************************
- *	@brief		Check bounds
- *	@retval		Nothing
+ *  @brief      Check if the block fits at its current position
+ *  @retval     true            Fits
+ *  @retval     false           Overlaps the board or is out of bounds
+ ************************************************************/
+bool CStBlock::CanPlace()
+{
+    return CheckBounds(m_XPos, m_YPos, m_Block);
+}
+
+/************************************************************
+ *  @brief      Check bounds
+ *  @param[in]  nMoveX          X position to test
+ *  @param[in]  nMoveY          Y position to test
+ *  @param[in]  MoveBlock       Block shape to test
+ *  @retval     true            Fits
+ *  @retval     false           Does not fit
  ************************************************************/
 bool CStBlock::CheckBounds(int nMoveX, int nMoveY, int MoveBlock[ST_MAX_BLOCK_Y][ST_MAX_BLOCK_X])
 {
@@ -205,10 +242,11 @@ bool CStBlock::CheckBounds(int nMoveX, int nMoveY, int MoveBlock[ST_MAX_BLOCK_Y]
     int nBoardXSize = m_pBoard->GetXSize();
     int nBoardYSize = m_pBoard->GetYSize();
 
-    // Get value of board
-    for (int nBlockY = 0; nBlockY < m_YSize; nBlockY++)
+    // Scan the whole shape, not just m_XSize * m_YSize - the shape being
+    // tested may be a rotation that reaches further than the current one
+    for (int nBlockY = 0; nBlockY < ST_MAX_BLOCK_Y; nBlockY++)
     {
-        for (int nBlockX = 0; nBlockX < m_XSize; nBlockX++)
+        for (int nBlockX = 0; nBlockX < ST_MAX_BLOCK_X; nBlockX++)
         {
             // Check if block is empty
             if (!MoveBlock[nBlockY][nBlockX])

@@ -4,24 +4,52 @@
 #include "stblock.h"
 #include "stboard.h"
 #include "stscore.h"
-#include "stview.h"
+#include "strandom.h"
+
+// Game state
+enum ST_STATE
+{
+    ST_STATE_PLAYING,
+    ST_STATE_PAUSED,
+    ST_STATE_GAMEOVER
+};
 
 class CStPlay
 {
 public:
     // Constructor
-    CStPlay(CStView* pView);
+    CStPlay();
+
+    // Start a new game
+    void NewGame(unsigned int dwSeed);
 
     // Move left
-    void MoveLeft();
+    bool MoveLeft();
     // Move right
-    void MoveRight();
-    // Move down
-    void MoveDown();
+    bool MoveRight();
     // Rotate
-    void Rotate();
-    // Drop
-    void Drop();
+    bool Rotate();
+    // Soft drop, moves the block down one cell
+    bool SoftDrop();
+    // Hard drop, drops the block and locks it
+    bool HardDrop();
+
+    // Advance the game by the elapsed time
+    void Tick(unsigned int dwElapsedMilliSec);
+
+    // Set pause
+    void SetPause(bool bPause);
+    // Toggle pause
+    void TogglePause();
+
+    // Get state
+    ST_STATE GetState();
+    // Is playing
+    bool IsPlaying();
+    // Is paused
+    bool IsPaused();
+    // Is game over
+    bool IsGameOver();
 
 	// Get board
 	CStBoard* GetBoard();
@@ -33,18 +61,30 @@ public:
 	CStScore* GetScore();
 	// Get high score
 	CStScore* GetHighScore();
+    // Get level
+    int GetLevel();
+    // Get cleared line count
+    int GetLines();
+    // Get the current fall interval in milliseconds
+    unsigned int GetFallInterval();
 
 private:
+    // Apply one step of gravity
+    void ApplyGravity();
+    // Lock the current block and bring in the next one
+    void LockBlock();
 	// Set block to board
 	void SetBlockToBoard();
-	// Clear complete line
-	void ClearCompleteLine();
+	// Clear complete lines, returns how many were cleared
+	int ClearCompleteLine();
 	// Change block
 	void ChangeBlock();
+    // Pick a random block type
+    int NextBlockType();
+    // Update high score from the current score
+    void UpdateHighScore();
 
-    // View
-    CStView* m_pView;
-    // Board
+    // Board - declared before the blocks, which take its address
     CStBoard m_Board;
     // Current Block
     CStBlock m_CurrentBlock;
@@ -54,7 +94,14 @@ private:
 	CStScore m_Score;
 	// High Score
 	CStScore m_HighScore;
+    // Random generator
+    CStRandom m_Random;
+    // State
+    ST_STATE m_State;
+    // Cleared line count
+    int m_nLines;
+    // Time accumulated towards the next fall, in milliseconds
+    unsigned int m_dwFallTimer;
 };
 
 #endif
-
