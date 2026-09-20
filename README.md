@@ -1,1 +1,59 @@
 # stetris c++
+
+Tetris written in C++.
+
+`src/` is the game and nothing else. It has no reference to any UI, no
+terminal or window code, no global `rand()`, and no file or clock access.
+A UI drives it and reads its state back:
+
+```cpp
+CStPlay play;
+play.NewGame(dwSeed);
+
+while (!play.IsGameOver())
+{
+    play.MoveLeft();            // input
+    play.Tick(dwElapsedMilliSec);   // the game decides when a block falls
+    Render(play);               // the UI pulls what it needs
+}
+```
+
+Because the seed is supplied by the caller, a given seed always replays the
+same game, so the logic can be tested with no UI at all.
+
+```
+src/                game logic (board, block, play, score, random)
+build/console/      terminal UI (macOS / Linux / Windows)
+```
+
+## Build and run
+
+```sh
+cd build/console
+make
+./stetris
+```
+
+| key | action |
+| --- | --- |
+| Left / Right (or A / D) | move |
+| Up (or W) | rotate |
+| Down (or S) | soft drop |
+| Space | hard drop |
+| P | pause |
+| R | restart |
+| Q | quit |
+
+The high score is kept in `~/.stetris_highscore`. Loading and saving it is the
+UI's job - the game only holds the value.
+
+## Tests
+
+The tests link the logic layer only, with no UI, and check the game rules:
+determinism from a seed, scoring, line clears, pause, game over, wall kicks
+and restart.
+
+```sh
+cd test
+make test
+```

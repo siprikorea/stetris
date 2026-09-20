@@ -1,0 +1,8 @@
+# Build output
+*.o
+build/console/stetris
+test/stlogictest
+
+# Editor and tooling
+.idea/
+.omc/
