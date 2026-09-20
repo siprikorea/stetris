@@ -7,10 +7,10 @@ test:
 	$(MAKE) -C test test
 
 console:
-	$(MAKE) -C console
+	$(MAKE) -C app/console
 
 clean:
 	$(MAKE) -C test clean
-	$(MAKE) -C console clean
+	$(MAKE) -C app/console clean
 
 .PHONY: all test console clean

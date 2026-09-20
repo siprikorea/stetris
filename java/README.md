@@ -14,6 +14,28 @@ javac -d out stetris/*.java test/LogicTest.java
 java -cp out LogicTest
 ```
 
+## Play
+
+```sh
+make console
+```
+
+| key | action |
+| --- | --- |
+| Left / Right (or A / D) | move |
+| Up (or W) | rotate |
+| Down (or S) | soft drop |
+| Space | hard drop |
+| P | pause |
+| R | restart |
+| Q | quit |
+
+The high score is kept in `~/.stetris_highscore`, shared with the apps in
+the other languages.
+
+The app is Unix only: Java cannot put a terminal into raw mode by itself,
+so it shells out to `stty`. Nothing in `stetris/` is affected by that.
+
 ## Use
 
 ```java

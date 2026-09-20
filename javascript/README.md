@@ -14,6 +14,25 @@ or
 node test/logictest.js
 ```
 
+## Play
+
+```sh
+make console
+```
+
+| key | action |
+| --- | --- |
+| Left / Right (or A / D) | move |
+| Up (or W) | rotate |
+| Down (or S) | soft drop |
+| Space | hard drop |
+| P | pause |
+| R | restart |
+| Q | quit |
+
+The high score is kept in `~/.stetris_highscore`, shared with the apps in
+the other languages.
+
 ## Use
 
 ```js

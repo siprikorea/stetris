@@ -3,4 +3,7 @@ NODE ?= node
 test:
 	$(NODE) test/logictest.js
 
-.PHONY: test
+console:
+	$(NODE) app/console/main.js
+
+.PHONY: test console

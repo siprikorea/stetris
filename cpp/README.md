@@ -6,9 +6,9 @@ The original implementation, and the one the other ports follow.
 terminal or window code, no global `rand()`, and no file or clock access.
 
 ```sh
-make test       # build and run the logic tests
-make console    # build the terminal UI
-console/stetris # play
+make test           # build and run the logic tests
+make console        # build the terminal app
+app/console/stetris # play
 ```
 
 ## Use
@@ -31,11 +31,11 @@ the way the ports do: `CStBoard::X_SIZE`, `StBlocks::COUNT`.
 ## Layout
 
 ```
-stetris/    the logic
-test/       the logic tests, which link stetris/ alone
-console/    the terminal UI, the only front end
+stetris/      the logic
+test/         the logic tests, which link stetris/ alone
+app/console/  the terminal app
 ```
 
-`console/` is the one part that talks to the outside world: it reads keys,
+`app/console/` is the one part that talks to the outside world: it reads keys,
 measures elapsed time to hand to `Tick()`, seeds a new game and stores the
 high score in a file. None of that lives in `stetris/`.

@@ -1,6 +1,6 @@
 # Build output
 *.o
-cpp/console/stetris
+cpp/app/console/stetris
 cpp/test/logictest
 
 # Java

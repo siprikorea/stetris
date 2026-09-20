@@ -3,7 +3,10 @@ PYTHON ?= python3
 test:
 	$(PYTHON) test/logictest.py
 
-clean:
-	rm -rf stetris/__pycache__ test/__pycache__ __pycache__
+console:
+	$(PYTHON) app/console/__main__.py
 
-.PHONY: test clean
+clean:
+	rm -rf stetris/__pycache__ test/__pycache__ app/console/__pycache__ __pycache__
+
+.PHONY: test console clean

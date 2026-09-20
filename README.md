@@ -8,8 +8,9 @@ window code, no global random generator, no file or clock access. A front
 end drives it and reads its state back.
 
 There is one such library per language - C++, Java, Python and JavaScript -
-and they all play the same game. C++ additionally has the one front end, a
-terminal UI.
+and they all play the same game. Each one comes with a terminal app built
+on top of it, and the four apps look and behave the same, down to sharing
+one high score file.
 
 ## Layout
 
@@ -20,14 +21,14 @@ Every language folder has the same shape:
 <lang>/README.md     how to use it, and how it differs from the C++
 <lang>/stetris/      the logic
 <lang>/test/         the tests, which link the logic alone
+<lang>/app/console/  the terminal front end
 ```
 
 The test is `logictest` in every language, except in Java where the file
 has to be `LogicTest.java` to match the public class.
 
 ```
-cpp/                the original, and the only front end
-cpp/console/          terminal UI (macOS / Linux / Windows)
+cpp/                the original
 java/
 python/
 javascript/
@@ -91,12 +92,13 @@ cd javascript && make test
 
 ## Play
 
-Only C++ has a front end so far.
+Any of the four, they play the same:
 
 ```sh
-cd cpp
-make console
-console/stetris
+cd cpp        && make console
+cd java       && make console
+cd python     && make console
+cd javascript && make console
 ```
 
 | key | action |
@@ -109,5 +111,8 @@ console/stetris
 | R | restart |
 | Q | quit |
 
-The high score is kept in `~/.stetris_highscore`. Loading and saving it is
-the front end's job; the game only holds the value.
+The high score is kept in `~/.stetris_highscore`, shared by all four apps.
+Loading and saving it is the app's job; the game only holds the value.
+
+`app/` is where a second front end would go - a Swing window, a browser
+page, a curses UI - without the logic changing.

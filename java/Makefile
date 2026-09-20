@@ -15,11 +15,17 @@ all: $(OUT)/.built
 test: $(OUT)/.built
 	$(JAVA) -cp $(OUT) LogicTest
 
-$(OUT)/.built: $(SOURCES) test/LogicTest.java
-	$(JAVAC) -Xlint:all -d $(OUT) $(SOURCES) test/LogicTest.java
+console: $(OUT)/.built
+	$(JAVA) -cp $(OUT) app.console.Main
+
+APP = app/console/ConsoleView.java \
+      app/console/Main.java
+
+$(OUT)/.built: $(SOURCES) $(APP) test/LogicTest.java
+	$(JAVAC) -Xlint:all -d $(OUT) $(SOURCES) $(APP) test/LogicTest.java
 	@touch $@
 
 clean:
 	rm -rf $(OUT)
 
-.PHONY: all test clean
+.PHONY: all test console clean
