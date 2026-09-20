@@ -27,20 +27,22 @@ cpp/console/        terminal UI (macOS / Linux / Windows)
 cpp/test/           logic tests, no UI linked
 java/               the same logic in Java
 python/             the same logic in Python
+javascript/         the same logic in JavaScript
 res/                icon and block images, kept for a graphical UI
 ```
 
 ## Ports
 
-`java/` and `python/` are the logic only, no UI. All three implementations
-follow the same rules, and each test suite checks the same table of seeds
-against the same expected scores, so a change to the rules in one place
-shows up as a failure in the others.
+`java/`, `python/` and `javascript/` are the logic only, no UI. All four
+implementations follow the same rules, and each test suite checks the same
+table of seeds against the same expected scores, so a change to the rules in
+one place shows up as a failure in the others.
 
 ```sh
-cd cpp/test && make test   # C++
-cd java     && make test   # Java
-cd python   && make test   # Python
+cd cpp/test    && make test   # C++
+cd java        && make test   # Java
+cd python      && make test   # Python
+cd javascript  && make test   # JavaScript
 ```
 
 ## Build and run
