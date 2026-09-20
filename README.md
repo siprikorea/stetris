@@ -24,6 +24,9 @@ Every language folder has the same shape:
 <lang>/app/console/  the terminal front end
 ```
 
+JavaScript has a second one, `javascript/app/web/`, a browser page on the
+same logic.
+
 The test is `logictest` in every language, except in Java where the file
 has to be `LogicTest.java` to match the public class.
 
@@ -98,7 +101,7 @@ Any of the four, they play the same:
 cd cpp        && make console
 cd java       && make console
 cd python     && make console
-cd javascript && make console
+cd javascript && make console   # or: make web
 ```
 
 | key | action |
@@ -114,5 +117,7 @@ cd javascript && make console
 The high score is kept in `~/.stetris_highscore`, shared by all four apps.
 Loading and saving it is the app's job; the game only holds the value.
 
-`app/` is where a second front end would go - a Swing window, a browser
-page, a curses UI - without the logic changing.
+`app/` is where a second front end goes without the logic changing, which
+`javascript/app/web/` is: a canvas page importing the same `stetris/`
+files as the terminal app. It keeps its high score in `localStorage`,
+having no home directory to write to.

@@ -6,4 +6,7 @@ test:
 console:
 	$(NODE) app/console/main.js
 
-.PHONY: test console
+web:
+	$(NODE) app/web/serve.js
+
+.PHONY: test console web

@@ -16,9 +16,16 @@ node test/logictest.js
 
 ## Play
 
+Two front ends, both on the same logic.
+
 ```sh
-make console
+make console    # terminal
+make web        # browser, then open the printed URL
 ```
+
+`make web` starts a small static server from the standard library, because
+ES modules do not load over `file://`. It serves the repository read only
+and takes `PORT` if 8080 is busy.
 
 | key | action |
 | --- | --- |
@@ -30,8 +37,9 @@ make console
 | R | restart |
 | Q | quit |
 
-The high score is kept in `~/.stetris_highscore`, shared with the apps in
-the other languages.
+The console app keeps the high score in `~/.stetris_highscore`, shared with
+the apps in the other languages. The web app has no home directory to write
+to, so it uses `localStorage` and keeps its own.
 
 ## Use
 
@@ -46,11 +54,12 @@ play.tick(elapsedMillis);   // the game decides when a block falls
 render(play);               // read the state back
 ```
 
-It runs unchanged in a browser, since nothing here touches Node APIs:
+Nothing in `stetris/` touches a Node API, which is why `app/web/` can
+import the very same files:
 
 ```html
 <script type="module">
-  import { Play } from './stetris/index.js';
+  import { Play } from '../../stetris/index.js';
 </script>
 ```
 
