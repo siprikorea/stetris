@@ -3,6 +3,10 @@
 build/console/stetris
 test/stlogictest
 
+# Java
+java/out/
+*.class
+
 # Python
 __pycache__/
 *.pyc

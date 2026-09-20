@@ -284,6 +284,129 @@ static void StTestWallKick()
 }
 
 /************************************************************
+ *  @brief      Scenario A, a fixed move script from an empty board
+ *  @param[in]  play            Game to drive
+ *  @retval     Nothing
+ ************************************************************/
+static void StScenarioA(CStPlay& play)
+{
+    for (int nDrop = 0; !play.IsGameOver() && nDrop < 100000; nDrop++)
+    {
+        for (int n = 0; n < nDrop % 4; n++)
+            play.Rotate();
+
+        int nShift = nDrop % 11;
+        if (nShift < 5)
+        {
+            for (int n = 0; n < 5 - nShift; n++)
+                play.MoveLeft();
+        }
+        else
+        {
+            for (int n = 0; n < nShift - 5; n++)
+                play.MoveRight();
+        }
+
+        if (nDrop % 7 == 0)
+            play.SoftDrop();
+
+        play.HardDrop();
+    }
+}
+
+/************************************************************
+ *  @brief      Scenario B, dropping into a gap so lines clear
+ *  @param[in]  play            Game to drive
+ *  @retval     Nothing
+ ************************************************************/
+static void StScenarioB(CStPlay& play)
+{
+    // Leave a four wide gap at the right, so any shape pushed against the
+    // wall drops into it and the rows fill up
+    CStBoard* pBoard = play.GetBoard();
+    for (int nBoardY = 14; nBoardY < pBoard->GetYSize(); nBoardY++)
+    {
+        for (int nBoardX = 0; nBoardX < pBoard->GetXSize() - 4; nBoardX++)
+            pBoard->SetValue(nBoardX, nBoardY, 1);
+    }
+
+    for (int nDrop = 0; !play.IsGameOver() && nDrop < 100000; nDrop++)
+    {
+        while (play.MoveRight())
+            ;
+        play.HardDrop();
+    }
+}
+
+//
+// Expected outcome of each scenario, by seed. The Java and Python ports
+// run the same two scenarios and must produce this same table; if one of
+// them drifts, the ports have stopped agreeing on the rules.
+//
+struct ST_REFERENCE
+{
+    char cScenario;
+    unsigned int dwSeed;
+    unsigned int dwScore;
+    int nLines;
+    int nLevel;
+};
+
+static const ST_REFERENCE g_Reference[] = {
+    { 'A',     1, 176, 0, 1 },
+    { 'A',     7, 263, 0, 1 },
+    { 'A',    42, 267, 0, 1 },
+    { 'A',   999, 174, 0, 1 },
+    { 'A', 12345, 323, 0, 1 },
+    { 'A',  2024, 353, 0, 1 },
+    { 'A', 65535, 156, 0, 1 },
+    { 'B',     1, 402, 1, 1 },
+    { 'B',     7, 200, 0, 1 },
+    { 'B',    42, 186, 0, 1 },
+    { 'B',   999, 324, 1, 1 },
+    { 'B', 12345, 362, 1, 1 },
+    { 'B',  2024, 212, 0, 1 },
+    { 'B', 65535, 198, 0, 1 },
+};
+
+/************************************************************
+ *  @brief      Every port must agree on the reference table
+ *  @retval     Nothing
+ ************************************************************/
+static void StTestReference()
+{
+    char szDetail[128];
+    int nMismatch = 0;
+
+    for (unsigned int i = 0; i < sizeof(g_Reference) / sizeof(g_Reference[0]); i++)
+    {
+        const ST_REFERENCE& ref = g_Reference[i];
+
+        CStPlay play;
+        play.NewGame(ref.dwSeed);
+
+        if (ref.cScenario == 'A')
+            StScenarioA(play);
+        else
+            StScenarioB(play);
+
+        if (play.GetScore()->GetScore() != ref.dwScore
+            || play.GetLines() != ref.nLines
+            || play.GetLevel() != ref.nLevel)
+        {
+            printf("    %c seed %u: got %u/%d/%d, want %u/%d/%d\n",
+                ref.cScenario, ref.dwSeed,
+                play.GetScore()->GetScore(), play.GetLines(), play.GetLevel(),
+                ref.dwScore, ref.nLines, ref.nLevel);
+            nMismatch++;
+        }
+    }
+
+    snprintf(szDetail, sizeof(szDetail), "%d cases", (int)(sizeof(g_Reference) / sizeof(g_Reference[0])));
+    StCheck("reference", nMismatch == 0, szDetail);
+}
+
+/************************************************************
  *  @brief      Main
  *  @retval     0               All checks passed
  *  @retval     1               At least one check failed
@@ -300,6 +423,7 @@ int main()
     StTestSpeed();
     StTestRestart();
     StTestWallKick();
+    StTestReference();
 
     printf("\n%s\n", g_nFail ? "FAILED" : "all passed");
 

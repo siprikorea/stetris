@@ -22,10 +22,25 @@ Because the seed is supplied by the caller, a given seed always replays the
 same game, so the logic can be tested with no UI at all.
 
 ```
-src/                game logic (board, block, play, score, random)
+src/                game logic in C++ (board, block, play, score, random)
 build/console/      terminal UI (macOS / Linux / Windows)
-res/                icon and block images, kept for a graphical UI
 test/               logic tests, no UI linked
+java/               the same logic in Java
+python/             the same logic in Python
+res/                icon and block images, kept for a graphical UI
+```
+
+## Ports
+
+`java/` and `python/` are the logic only, no UI. All three implementations
+follow the same rules, and each test suite checks the same table of seeds
+against the same expected scores, so a change to the rules in one place
+shows up as a failure in the others.
+
+```sh
+cd test   && make test   # C++
+cd java   && make test   # Java
+cd python && make test   # Python
 ```
 
 ## Build and run
