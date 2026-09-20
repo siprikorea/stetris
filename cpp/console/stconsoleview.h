@@ -1,7 +1,7 @@
 #ifndef __STCONSOLEVIEW_H__
 #define __STCONSOLEVIEW_H__
 
-#include "../../cpp/stplay.h"
+#include "../stplay.h"
 
 //
 // Renders a CStPlay to the terminal. The logic layer knows nothing about

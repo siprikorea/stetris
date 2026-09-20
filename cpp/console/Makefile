@@ -1,6 +1,6 @@
 CXX      ?= c++
 CXXFLAGS ?= -O2 -Wall -Wextra -std=c++11
-SRCDIR    = ../../cpp
+SRCDIR    = ..
 TARGET    = stetris
 
 OBJS = stconsolemain.o \

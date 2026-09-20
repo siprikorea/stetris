@@ -23,8 +23,8 @@ same game, so the logic can be tested with no UI at all.
 
 ```
 cpp/                game logic in C++ (board, block, play, score, random)
-build/console/      terminal UI (macOS / Linux / Windows)
-test/               logic tests, no UI linked
+cpp/console/        terminal UI (macOS / Linux / Windows)
+cpp/test/           logic tests, no UI linked
 java/               the same logic in Java
 python/             the same logic in Python
 res/                icon and block images, kept for a graphical UI
@@ -38,15 +38,15 @@ against the same expected scores, so a change to the rules in one place
 shows up as a failure in the others.
 
 ```sh
-cd test   && make test   # C++
-cd java   && make test   # Java
-cd python && make test   # Python
+cd cpp/test && make test   # C++
+cd java     && make test   # Java
+cd python   && make test   # Python
 ```
 
 ## Build and run
 
 ```sh
-cd build/console
+cd cpp/console
 make
 ./stetris
 ```
