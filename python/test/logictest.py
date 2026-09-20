@@ -111,7 +111,7 @@ def test_line_clear() -> None:
     # Fill the bottom two rows except the two leftmost columns
     for y in range(y_size - 2, y_size):
         for x in range(2, x_size):
-            board.set(x, y, 1)
+            board.set_value(x, y, 1)
 
     before = play.score.get()
 
@@ -127,7 +127,7 @@ def test_line_clear() -> None:
     # Two lines at level 1 is 300, plus 2 per cell of the hard drop
     check("line score", gained >= 300, detail)
 
-    empty = all(board.get(x, y_size - 1) == 0 for x in range(x_size))
+    empty = all(board.get_value(x, y_size - 1) == 0 for x in range(x_size))
     check("rows removed", empty, "bottom row cleared")
 
 
@@ -154,7 +154,7 @@ def test_restart() -> None:
     kept = play.high_score.get() == high and high > 0
 
     board = play.board
-    empty = all(board.get(x, y) == 0
+    empty = all(board.get_value(x, y) == 0
                 for y in range(board.y_size) for x in range(board.x_size))
 
     check("restart", reset and empty, f"high {high} kept")
@@ -211,7 +211,7 @@ def scenario_b(play: Play) -> None:
     board = play.board
     for y in range(14, board.y_size):
         for x in range(board.x_size - 4):
-            board.set(x, y, 1)
+            board.set_value(x, y, 1)
 
     drop = 0
     while not play.is_game_over and drop < 100000:

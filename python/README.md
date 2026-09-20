@@ -11,7 +11,7 @@ make test
 or
 
 ```sh
-python3 test/test_logic.py
+python3 test/logictest.py
 ```
 
 ## Use
@@ -30,18 +30,18 @@ while not play.is_game_over:
 
 ## Differences from the C++
 
-The rules are identical and the tests check that they stay identical. Only
-the surface changes:
+The rules are identical, the public API is the same name for name, and the
+tests check that both stay that way. What changes is spelling and the
+things the language does differently:
 
 | C++ | Python |
 | --- | --- |
 | `CStPlay`, `CStBoard`, … | `Play`, `Board`, … in package `stetris` |
+| `GetCell`, `MoveLeft`, `NewGame` | `get_cell`, `move_left`, `new_game` |
 | `GetScore()`, `IsGameOver()` | `score`, `is_game_over` properties |
-| `m_CurrentBlock = m_NextBlock` | `current_block.copy_from(next_block)` |
 | `CStRandom` | `Rng`, not the `random` module |
-| `ST_STATE` constants | `enum State` |
-| `GetValue` / `SetValue` | `board.get` / `board.set` |
-| `GetBlock(x, y)` | `block.get(x, y)` |
+| `ST_STATE::PLAYING` | `State.PLAYING` |
+| `unsigned int` score | unbounded `int` |
 
 `Rng` is a plain linear congruential generator rather than `random`, because
 a seed has to produce the same sequence here as it does in the other ports.

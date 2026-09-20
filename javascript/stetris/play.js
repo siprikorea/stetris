@@ -211,8 +211,8 @@ export class Play {
     const block = this.#currentBlock;
     for (let y = 0; y < block.ySize; y++) {
       for (let x = 0; x < block.xSize; x++) {
-        if (block.get(x, y)) {
-          this.#board.set(block.xPos + x, block.yPos + y, block.type);
+        if (block.getCell(x, y)) {
+          this.#board.setValue(block.xPos + x, block.yPos + y, block.type);
         }
       }
     }
@@ -227,7 +227,7 @@ export class Play {
     for (let y = ySize - 1; y >= 0; ) {
       let count = 0;
       for (let x = 0; x < xSize; x++) {
-        if (this.#board.get(x, y)) {
+        if (this.#board.getValue(x, y)) {
           count += 1;
         }
       }
@@ -241,11 +241,11 @@ export class Play {
       // Pull everything above down by one, then empty the top line
       for (let move = y; move > 0; move--) {
         for (let x = 0; x < xSize; x++) {
-          this.#board.set(x, move, this.#board.get(x, move - 1));
+          this.#board.setValue(x, move, this.#board.getValue(x, move - 1));
         }
       }
       for (let x = 0; x < xSize; x++) {
-        this.#board.set(x, 0, 0);
+        this.#board.setValue(x, 0, 0);
       }
 
       cleared += 1;

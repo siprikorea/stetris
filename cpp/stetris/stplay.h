@@ -7,11 +7,11 @@
 #include "strandom.h"
 
 // Game state
-enum ST_STATE
+enum class ST_STATE
 {
-    ST_STATE_PLAYING,
-    ST_STATE_PAUSED,
-    ST_STATE_GAMEOVER
+    PLAYING,
+    PAUSED,
+    GAMEOVER
 };
 
 class CStPlay

@@ -151,7 +151,7 @@ void CStConsoleView::DrawBoard(CStPlay& play)
         {
             for (int nBlockX = 0; nBlockX < pBlock->GetXSize(); nBlockX++)
             {
-                if (!pBlock->GetBlock(nBlockX, nBlockY))
+                if (!pBlock->GetCell(nBlockX, nBlockY))
                     continue;
 
                 int nX = pBlock->GetXPos() + nBlockX;
@@ -225,7 +225,7 @@ void CStConsoleView::DrawSide(CStPlay& play, int nLine)
             CStBlock* pNext = play.GetNextBlock();
             int nBlockY = nLine - 1;
             for (int nBlockX = 0; nBlockX < ST_MAX_BLOCK_X; nBlockX++)
-                PutCell(pNext->GetBlock(nBlockX, nBlockY) ? pNext->GetType() : 0);
+                PutCell(pNext->GetCell(nBlockX, nBlockY) ? pNext->GetType() : 0);
         }
         break;
 
@@ -234,7 +234,7 @@ void CStConsoleView::DrawSide(CStPlay& play, int nLine)
         break;
 
     case 7:
-        snprintf(szLine, sizeof(szLine), "%u", play.GetScore()->GetScore());
+        snprintf(szLine, sizeof(szLine), "%u", play.GetScore()->Get());
         PutString(szLine);
         break;
 
@@ -243,7 +243,7 @@ void CStConsoleView::DrawSide(CStPlay& play, int nLine)
         break;
 
     case 10:
-        snprintf(szLine, sizeof(szLine), "%u", play.GetHighScore()->GetScore());
+        snprintf(szLine, sizeof(szLine), "%u", play.GetHighScore()->Get());
         PutString(szLine);
         break;
 

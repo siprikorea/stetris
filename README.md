@@ -22,6 +22,9 @@ Every language folder has the same shape:
 <lang>/test/         the tests, which link the logic alone
 ```
 
+The test is `logictest` in every language, except in Java where the file
+has to be `LogicTest.java` to match the public class.
+
 ```
 cpp/                the original, and the only front end
 cpp/console/          terminal UI (macOS / Linux / Windows)
@@ -33,8 +36,8 @@ res/                icon and block images, kept for a graphical UI
 
 ## The logic
 
-The shape of the API is the same everywhere, down to the method names, with
-each port spelling them the way its language would:
+The public API is the same name for name in all four, with each port
+spelling it the way its language would - `GetCell`, `getCell`, `get_cell`:
 
 | | |
 | --- | --- |

@@ -42,6 +42,22 @@ void CStBlock::Reset(int nType)
 }
 
 /************************************************************
+ *  @brief      Take another block's shape and position
+ *  @param[in]  other           Block to copy
+ *  @retval     Nothing
+ ************************************************************/
+void CStBlock::CopyFrom(const CStBlock& other)
+{
+    m_Type = other.m_Type;
+    m_XSize = other.m_XSize;
+    m_YSize = other.m_YSize;
+    m_XPos = other.m_XPos;
+    m_YPos = other.m_YPos;
+    m_Rotation = other.m_Rotation;
+    memcpy(m_Block, other.m_Block, sizeof(m_Block));
+}
+
+/************************************************************
  *  @brief      Get type
  *  @retval     Type
  ************************************************************/
@@ -92,7 +108,7 @@ int CStBlock::GetYPos()
  *  @param[in]  nY              Y position in the block
  *  @retval     Cell value (0 = empty)
  ************************************************************/
-int CStBlock::GetBlock(int nX, int nY)
+int CStBlock::GetCell(int nX, int nY)
 {
     if (nX < 0 || nX >= ST_MAX_BLOCK_X)
         return 0;
@@ -125,7 +141,7 @@ bool CStBlock::Rotate()
         int nTempXPos = m_XPos + nKicks[nKick];
 
         // Check bounds
-        if (!CheckBounds(nTempXPos, m_YPos, TempBlock))
+        if (!Fits(nTempXPos, m_YPos, TempBlock))
         {
             continue;
         }
@@ -150,7 +166,7 @@ bool CStBlock::Rotate()
 bool CStBlock::MoveLeft()
 {
     // Check bounds
-    if (CheckBounds(m_XPos - 1, m_YPos, m_Block))
+    if (Fits(m_XPos - 1, m_YPos, m_Block))
     {
         // Set current X position
         m_XPos = m_XPos - 1;
@@ -170,7 +186,7 @@ bool CStBlock::MoveLeft()
 bool CStBlock::MoveRight()
 {
     // Check bounds
-    if (CheckBounds(m_XPos + 1, m_YPos, m_Block))
+    if (Fits(m_XPos + 1, m_YPos, m_Block))
     {
         // Set current X position
         m_XPos = m_XPos + 1;
@@ -190,7 +206,7 @@ bool CStBlock::MoveRight()
 bool CStBlock::MoveDown()
 {
     // Check bounds
-    if (CheckBounds(m_XPos, m_YPos + 1, m_Block))
+    if (Fits(m_XPos, m_YPos + 1, m_Block))
     {
         // Set current Y position
         m_YPos = m_YPos + 1;
@@ -225,7 +241,7 @@ int CStBlock::Drop()
  ************************************************************/
 bool CStBlock::CanPlace()
 {
-    return CheckBounds(m_XPos, m_YPos, m_Block);
+    return Fits(m_XPos, m_YPos, m_Block);
 }
 
 /************************************************************
@@ -236,7 +252,7 @@ bool CStBlock::CanPlace()
  *  @retval     true            Fits
  *  @retval     false           Does not fit
  ************************************************************/
-bool CStBlock::CheckBounds(int nMoveX, int nMoveY, int MoveBlock[ST_MAX_BLOCK_Y][ST_MAX_BLOCK_X])
+bool CStBlock::Fits(int nMoveX, int nMoveY, int MoveBlock[ST_MAX_BLOCK_Y][ST_MAX_BLOCK_X])
 {
     // Get board size
     int nBoardXSize = m_pBoard->GetXSize();

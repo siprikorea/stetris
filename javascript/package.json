@@ -6,6 +6,6 @@
   "main": "stetris/index.js",
   "private": true,
   "scripts": {
-    "test": "node test/test_logic.js"
+    "test": "node test/logictest.js"
   }
 }

@@ -189,8 +189,8 @@ class Play:
         block = self._current_block
         for y in range(block.y_size):
             for x in range(block.x_size):
-                if block.get(x, y):
-                    self._board.set(block.x_pos + x, block.y_pos + y, block.type)
+                if block.get_cell(x, y):
+                    self._board.set_value(block.x_pos + x, block.y_pos + y, block.type)
 
     def _clear_complete_lines(self) -> int:
         """Remove every complete line, returning how many there were."""
@@ -200,7 +200,7 @@ class Play:
 
         y = y_size - 1
         while y >= 0:
-            count = sum(1 for x in range(x_size) if self._board.get(x, y))
+            count = sum(1 for x in range(x_size) if self._board.get_value(x, y))
 
             if count != x_size:
                 # Not complete, look at the line above
@@ -210,9 +210,9 @@ class Play:
             # Pull everything above down by one, then empty the top line
             for move in range(y, 0, -1):
                 for x in range(x_size):
-                    self._board.set(x, move, self._board.get(x, move - 1))
+                    self._board.set_value(x, move, self._board.get_value(x, move - 1))
             for x in range(x_size):
-                self._board.set(x, 0, 0)
+                self._board.set_value(x, 0, 0)
 
             cleared += 1
 

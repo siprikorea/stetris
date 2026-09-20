@@ -29,17 +29,18 @@ while (!play.isGameOver()) {
 
 ## Differences from the C++
 
-The rules are identical and the tests check that they stay identical. Only
-the surface changes:
+The rules are identical, the public API is the same name for name, and the
+tests check that both stay that way. What changes is spelling and the
+things the language does differently:
 
 | C++ | Java |
 | --- | --- |
 | `CStPlay`, `CStBoard`, … | `Play`, `Board`, … in package `stetris` |
-| `m_CurrentBlock = m_NextBlock` | `currentBlock.copyFrom(nextBlock)` |
+| `GetCell`, `MoveLeft`, `NewGame` | `getCell`, `moveLeft`, `newGame` |
 | `CStRandom` | `Rng`, not `java.util.Random` |
-| `ST_STATE` constants | `enum State` |
+| `ST_STATE::PLAYING` | `State.PLAYING` |
 | `unsigned int` score | `long` score |
-| `GetBlock(x, y)` | `getCell(x, y)` |
+| raw pointers from `GetBoard()` | references |
 
 `Rng` is a plain linear congruential generator rather than
 `java.util.Random`, because a seed has to produce the same sequence here as

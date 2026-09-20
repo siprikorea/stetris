@@ -20,8 +20,3 @@ class Score:
     def get(self) -> int:
         """Return the score."""
         return self._value
-
-    @property
-    def value(self) -> int:
-        """The score."""
-        return self._value

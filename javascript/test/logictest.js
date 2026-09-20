@@ -108,7 +108,7 @@ function testLineClear() {
   // Fill the bottom two rows except the two leftmost columns
   for (let y = ySize - 2; y < ySize; y++) {
     for (let x = 2; x < xSize; x++) {
-      board.set(x, y, 1);
+      board.setValue(x, y, 1);
     }
   }
 
@@ -129,7 +129,7 @@ function testLineClear() {
 
   let empty = true;
   for (let x = 0; x < xSize; x++) {
-    if (board.get(x, ySize - 1)) {
+    if (board.getValue(x, ySize - 1)) {
       empty = false;
     }
   }
@@ -162,7 +162,7 @@ function testRestart() {
   const board = play.board;
   for (let y = 0; y < board.ySize; y++) {
     for (let x = 0; x < board.xSize; x++) {
-      if (board.get(x, y)) {
+      if (board.getValue(x, y)) {
         empty = false;
       }
     }
@@ -229,7 +229,7 @@ function scenarioB(play) {
   const board = play.board;
   for (let y = 14; y < board.ySize; y++) {
     for (let x = 0; x < board.xSize - 4; x++) {
-      board.set(x, y, 1);
+      board.setValue(x, y, 1);
     }
   }
 

@@ -67,7 +67,7 @@ export class Block {
   }
 
   /** Returns a cell of the shape, or zero when it is out of bounds. */
-  get(x, y) {
+  getCell(x, y) {
     if (x < 0 || x >= blocks.SIZE || y < 0 || y >= blocks.SIZE) {
       return 0;
     }
@@ -152,7 +152,7 @@ export class Block {
         if (by < 0 || by >= this.#board.ySize) {
           return false;
         }
-        if (this.#board.get(bx, by)) {
+        if (this.#board.getValue(bx, by)) {
           return false;
         }
       }

@@ -40,7 +40,7 @@ static unsigned int StPlayOut(unsigned int dwSeed)
         play.HardDrop();
     }
 
-    return play.GetScore()->GetScore();
+    return play.GetScore()->Get();
 }
 
 /************************************************************
@@ -76,8 +76,8 @@ static void StTestIdleScore()
     for (int nStep = 0; nStep < 100; nStep++)
         play.Tick(100);
 
-    snprintf(szDetail, sizeof(szDetail), "10s idle -> %u", play.GetScore()->GetScore());
-    StCheck("idle score", play.GetScore()->GetScore() == 0, szDetail);
+    snprintf(szDetail, sizeof(szDetail), "10s idle -> %u", play.GetScore()->Get());
+    StCheck("idle score", play.GetScore()->Get() == 0, szDetail);
 }
 
 /************************************************************
@@ -172,14 +172,14 @@ static void StTestLineClear()
             pBoard->SetValue(nBoardX, nBoardY, 1);
     }
 
-    unsigned int dwBefore = play.GetScore()->GetScore();
+    unsigned int dwBefore = play.GetScore()->Get();
 
     // Slide the square into the gap and drop it, completing both rows
     while (play.MoveLeft())
         ;
     play.HardDrop();
 
-    unsigned int dwGained = play.GetScore()->GetScore() - dwBefore;
+    unsigned int dwGained = play.GetScore()->Get() - dwBefore;
 
     snprintf(szDetail, sizeof(szDetail), "%d lines, +%u", play.GetLines(), dwGained);
     StCheck("line clear", play.GetLines() == 2, szDetail);
@@ -227,14 +227,14 @@ static void StTestRestart()
     while (!play.IsGameOver() && nGuard++ < 100000)
         play.HardDrop();
 
-    unsigned int dwHighScore = play.GetHighScore()->GetScore();
+    unsigned int dwHighScore = play.GetHighScore()->Get();
 
     play.NewGame(4);
 
-    bool bReset = play.GetScore()->GetScore() == 0
+    bool bReset = play.GetScore()->Get() == 0
         && play.GetLines() == 0
         && play.IsPlaying();
-    bool bKept = play.GetHighScore()->GetScore() == dwHighScore && dwHighScore > 0;
+    bool bKept = play.GetHighScore()->Get() == dwHighScore && dwHighScore > 0;
 
     // The board must be empty again
     bool bEmpty = true;
@@ -390,13 +390,13 @@ static void StTestReference()
         else
             StScenarioB(play);
 
-        if (play.GetScore()->GetScore() != ref.dwScore
+        if (play.GetScore()->Get() != ref.dwScore
             || play.GetLines() != ref.nLines
             || play.GetLevel() != ref.nLevel)
         {
             printf("    %c seed %u: got %u/%d/%d, want %u/%d/%d\n",
                 ref.cScenario, ref.dwSeed,
-                play.GetScore()->GetScore(), play.GetLines(), play.GetLevel(),
+                play.GetScore()->Get(), play.GetLines(), play.GetLevel(),
                 ref.dwScore, ref.nLines, ref.nLevel);
             nMismatch++;
         }

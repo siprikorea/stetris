@@ -23,7 +23,7 @@ void CStScore::Clear()
  *	@brief		Add score
  *	@retval		Nothing
  ************************************************************/
-void CStScore::AddScore(unsigned int dwScore)
+void CStScore::Add(unsigned int dwScore)
 {
 	m_dwScore += dwScore;
 }
@@ -32,7 +32,7 @@ void CStScore::AddScore(unsigned int dwScore)
  *	@brief		Set score
  *	@retval		Nothing
  ************************************************************/
-void CStScore::SetScore(unsigned int dwScore)
+void CStScore::Set(unsigned int dwScore)
 {
 	m_dwScore = dwScore;
 }
@@ -41,7 +41,7 @@ void CStScore::SetScore(unsigned int dwScore)
  *	@brief		Get score
  *	@retval		Nothing
  ************************************************************/
-unsigned int CStScore::GetScore()
+unsigned int CStScore::Get()
 {
 	return m_dwScore;
 }

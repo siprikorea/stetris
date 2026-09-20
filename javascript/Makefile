@@ -1,6 +1,6 @@
 NODE ?= node
 
 test:
-	$(NODE) test/test_logic.js
+	$(NODE) test/logictest.js
 
 .PHONY: test

@@ -11,7 +11,7 @@ make test
 or
 
 ```sh
-node test/test_logic.js
+node test/logictest.js
 ```
 
 ## Use
@@ -37,19 +37,18 @@ It runs unchanged in a browser, since nothing here touches Node APIs:
 
 ## Differences from the C++
 
-The rules are identical and the tests check that they stay identical. Only
-the surface changes:
+The rules are identical, the public API is the same name for name, and the
+tests check that both stay that way. What changes is spelling and the
+things the language does differently:
 
 | C++ | JavaScript |
 | --- | --- |
 | `CStPlay`, `CStBoard`, … | `Play`, `Board`, … |
+| `GetCell`, `MoveLeft`, `NewGame` | `getCell`, `moveLeft`, `newGame` |
 | `GetScore()`, `IsGameOver()` | `score`, `isGameOver` getters |
-| `m_CurrentBlock = m_NextBlock` | `currentBlock.copyFrom(nextBlock)` |
 | `CStRandom` | `Rng`, not `Math.random` |
-| `ST_STATE` constants | frozen `State` object |
-| `GetValue` / `SetValue` | `board.get` / `board.set` |
-| `GetBlock(x, y)` | `block.get(x, y)` |
-| private members | `#private` class fields |
+| `ST_STATE::PLAYING` | frozen `State.PLAYING` |
+| `protected` members | `#private` class fields |
 
 `Rng` is a plain linear congruential generator rather than `Math.random`,
 because a seed has to produce the same sequence here as it does in the

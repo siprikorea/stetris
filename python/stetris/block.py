@@ -56,7 +56,7 @@ class Block:
     def y_pos(self) -> int:
         return self._y_pos
 
-    def get(self, x: int, y: int) -> int:
+    def get_cell(self, x: int, y: int) -> int:
         """Return a cell of the shape, or zero when out of bounds."""
         if not 0 <= x < blocks.SIZE or not 0 <= y < blocks.SIZE:
             return 0
@@ -125,7 +125,7 @@ class Block:
                     return False
                 if not 0 <= by < self._board.y_size:
                     return False
-                if self._board.get(bx, by):
+                if self._board.get_value(bx, by):
                     return False
 
         return True

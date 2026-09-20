@@ -15,6 +15,8 @@ public:
 
     // Reset to the spawn position with the given type
     void Reset(int nType);
+    // Take another block's shape and position
+    void CopyFrom(const CStBlock& other);
 
     // Get type
     int GetType();
@@ -27,7 +29,7 @@ public:
     // Get Y position
     int GetYPos();
 	// Get block
-	int GetBlock(int nX, int nY);
+	int GetCell(int nX, int nY);
 
     // Rotate
     bool Rotate();
@@ -43,7 +45,7 @@ public:
     // Check if the block fits at its current position
     bool CanPlace();
     // Check bounds
-    bool CheckBounds(int nMoveX, int nMoveY, int MoveBlock[ST_MAX_BLOCK_Y][ST_MAX_BLOCK_X]);
+    bool Fits(int nMoveX, int nMoveY, int MoveBlock[ST_MAX_BLOCK_Y][ST_MAX_BLOCK_X]);
 
 protected:
     // Board

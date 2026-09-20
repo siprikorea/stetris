@@ -21,9 +21,4 @@ export class Score {
   get() {
     return this.#value;
   }
-
-  /** The score. */
-  get value() {
-    return this.#value;
-  }
 }

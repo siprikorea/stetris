@@ -26,13 +26,13 @@ class Board:
         """Height in cells."""
         return Y_SIZE
 
-    def get(self, x: int, y: int) -> int:
+    def get_value(self, x: int, y: int) -> int:
         """Return the cell value, or zero when empty or out of bounds."""
         if not 0 <= x < X_SIZE or not 0 <= y < Y_SIZE:
             return 0
         return self._cells[y][x]
 
-    def set(self, x: int, y: int, value: int) -> None:
+    def set_value(self, x: int, y: int, value: int) -> None:
         """Set the cell value, ignoring positions outside the board."""
         if not 0 <= x < X_SIZE or not 0 <= y < Y_SIZE:
             return

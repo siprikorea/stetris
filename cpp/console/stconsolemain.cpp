@@ -246,7 +246,7 @@ int main()
     play.NewGame((unsigned int)time(NULL));
 
     // The high score is stored by the platform, the game only holds it
-    play.GetHighScore()->SetScore(StLoadHighScore());
+    play.GetHighScore()->Set(StLoadHighScore());
 
     // View
     CStConsoleView view;
@@ -311,7 +311,7 @@ int main()
         // Persist the high score as soon as the game ends
         if (play.IsGameOver() && !bSaved)
         {
-            StSaveHighScore(play.GetHighScore()->GetScore());
+            StSaveHighScore(play.GetHighScore()->Get());
             bSaved = true;
         }
 
@@ -321,14 +321,14 @@ int main()
     }
 
     // Save high score
-    StSaveHighScore(play.GetHighScore()->GetScore());
+    StSaveHighScore(play.GetHighScore()->Get());
 
     // Leave screen
     view.LeaveScreen();
     StLeaveRawMode();
 
     printf("SCORE %u   HIGH SCORE %u   LEVEL %d   LINES %d\n",
-        play.GetScore()->GetScore(), play.GetHighScore()->GetScore(),
+        play.GetScore()->Get(), play.GetHighScore()->Get(),
         play.GetLevel(), play.GetLines());
 
     return 0;

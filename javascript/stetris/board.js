@@ -26,7 +26,7 @@ export class Board {
   }
 
   /** Returns the cell value, or zero when it is empty or out of bounds. */
-  get(x, y) {
+  getValue(x, y) {
     if (x < 0 || x >= X_SIZE || y < 0 || y >= Y_SIZE) {
       return 0;
     }
@@ -34,7 +34,7 @@ export class Board {
   }
 
   /** Sets the cell value, ignoring positions outside the board. */
-  set(x, y, value) {
+  setValue(x, y, value) {
     if (x < 0 || x >= X_SIZE || y < 0 || y >= Y_SIZE) {
       return;
     }

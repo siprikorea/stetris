@@ -11,11 +11,11 @@ public:
     void Clear();
 
 	// Add score
-	void AddScore(unsigned int dwScore);
+	void Add(unsigned int dwScore);
 	// Set score
-	void SetScore(unsigned int dwScore);
+	void Set(unsigned int dwScore);
 	// Get score
-	unsigned int GetScore();
+	unsigned int Get();
 
 private:
 	// Score

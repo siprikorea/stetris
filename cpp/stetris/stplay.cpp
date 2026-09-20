@@ -43,7 +43,7 @@ void CStPlay::NewGame(unsigned int dwSeed)
     // Score - the high score survives a new game
     m_Score.Clear();
     // State
-    m_State = ST_STATE_PLAYING;
+    m_State = ST_STATE::PLAYING;
     // Cleared line count
     m_nLines = 0;
     // Fall timer
@@ -113,7 +113,7 @@ bool CStPlay::SoftDrop()
         return false;
     }
 
-    m_Score.AddScore(ST_SOFT_DROP_SCORE);
+    m_Score.Add(ST_SOFT_DROP_SCORE);
     UpdateHighScore();
     return true;
 }
@@ -130,7 +130,7 @@ bool CStPlay::HardDrop()
 
     int nDistance = m_CurrentBlock.Drop();
 
-    m_Score.AddScore(ST_HARD_DROP_SCORE * (unsigned int)nDistance);
+    m_Score.Add(ST_HARD_DROP_SCORE * (unsigned int)nDistance);
     UpdateHighScore();
 
     LockBlock();
@@ -168,10 +168,10 @@ void CStPlay::Tick(unsigned int dwElapsedMilliSec)
 void CStPlay::SetPause(bool bPause)
 {
     // The game cannot be paused or resumed once it is over
-    if (m_State == ST_STATE_GAMEOVER)
+    if (m_State == ST_STATE::GAMEOVER)
         return;
 
-    m_State = bPause ? ST_STATE_PAUSED : ST_STATE_PLAYING;
+    m_State = bPause ? ST_STATE::PAUSED : ST_STATE::PLAYING;
 }
 
 /************************************************************
@@ -180,7 +180,7 @@ void CStPlay::SetPause(bool bPause)
  ************************************************************/
 void CStPlay::TogglePause()
 {
-    SetPause(m_State == ST_STATE_PLAYING);
+    SetPause(m_State == ST_STATE::PLAYING);
 }
 
 /************************************************************
@@ -198,7 +198,7 @@ ST_STATE CStPlay::GetState()
  ************************************************************/
 bool CStPlay::IsPlaying()
 {
-    return m_State == ST_STATE_PLAYING;
+    return m_State == ST_STATE::PLAYING;
 }
 
 /************************************************************
@@ -207,7 +207,7 @@ bool CStPlay::IsPlaying()
  ************************************************************/
 bool CStPlay::IsPaused()
 {
-    return m_State == ST_STATE_PAUSED;
+    return m_State == ST_STATE::PAUSED;
 }
 
 /************************************************************
@@ -216,7 +216,7 @@ bool CStPlay::IsPaused()
  ************************************************************/
 bool CStPlay::IsGameOver()
 {
-    return m_State == ST_STATE_GAMEOVER;
+    return m_State == ST_STATE::GAMEOVER;
 }
 
 /************************************************************
@@ -328,7 +328,7 @@ void CStPlay::LockBlock()
             nCleared = 4;
 
         // Score after the level has been updated by the new lines
-        m_Score.AddScore(g_dwLineScore[nCleared] * (unsigned int)GetLevel());
+        m_Score.Add(g_dwLineScore[nCleared] * (unsigned int)GetLevel());
         UpdateHighScore();
     }
 
@@ -354,7 +354,7 @@ void CStPlay::SetBlockToBoard()
     {
         for (int nBlockX = 0; nBlockX < nXSize; nBlockX++)
         {
-            if (m_CurrentBlock.GetBlock(nBlockX, nBlockY))
+            if (m_CurrentBlock.GetCell(nBlockX, nBlockY))
             {
                 m_Board.SetValue(m_CurrentBlock.GetXPos() + nBlockX, m_CurrentBlock.GetYPos() + nBlockY, m_CurrentBlock.GetType());
             }
@@ -426,7 +426,7 @@ int CStPlay::ClearCompleteLine()
 void CStPlay::ChangeBlock()
 {
     // Set current block
-    m_CurrentBlock = m_NextBlock;
+    m_CurrentBlock.CopyFrom(m_NextBlock);
     // Set next block
     m_NextBlock.Reset(NextBlockType());
 
@@ -434,7 +434,7 @@ void CStPlay::ChangeBlock()
     // has reached the top
     if (!m_CurrentBlock.CanPlace())
     {
-        m_State = ST_STATE_GAMEOVER;
+        m_State = ST_STATE::GAMEOVER;
     }
 }
 
@@ -453,6 +453,6 @@ int CStPlay::NextBlockType()
  ************************************************************/
 void CStPlay::UpdateHighScore()
 {
-    if (m_HighScore.GetScore() < m_Score.GetScore())
-        m_HighScore.SetScore(m_Score.GetScore());
+    if (m_HighScore.Get() < m_Score.Get())
+        m_HighScore.Set(m_Score.Get());
 }

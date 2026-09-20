@@ -1,10 +1,10 @@
 CXX      ?= c++
 CXXFLAGS ?= -O2 -Wall -Wextra -std=c++11
 SRCDIR    = ../stetris
-TARGET    = stlogictest
+TARGET    = logictest
 
 # Only the logic layer is linked, never a UI
-OBJS = stlogictest.o \
+OBJS = logictest.o \
        stplay.o \
        stblock.o \
        stblocks.o \
