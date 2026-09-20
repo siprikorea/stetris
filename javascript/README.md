@@ -1,6 +1,6 @@
 # stetris - JavaScript
 
-A port of the game logic in `cpp/`. Logic only: no UI, and nothing here
+A port of the game logic in `cpp/stetris/`. Logic only: no UI, and nothing here
 reads a keyboard, a clock or a file. Standard ES modules, no dependencies,
 no build step.
 
@@ -11,7 +11,7 @@ make test
 or
 
 ```sh
-node test_logic.js
+node test/test_logic.js
 ```
 
 ## Use

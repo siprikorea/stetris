@@ -1,6 +1,6 @@
 # stetris - Java
 
-A port of the game logic in `cpp/`. Logic only: no UI, and nothing here
+A port of the game logic in `cpp/stetris/`. Logic only: no UI, and nothing here
 reads a keyboard, a clock or a file.
 
 ```sh
@@ -10,7 +10,7 @@ make test
 That compiles into `out/` and runs the tests. Plain `javac` works too:
 
 ```sh
-javac -d out stetris/*.java LogicTest.java
+javac -d out stetris/*.java test/LogicTest.java
 java -cp out LogicTest
 ```
 

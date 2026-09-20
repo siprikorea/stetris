@@ -1,6 +1,6 @@
 # stetris - Python
 
-A port of the game logic in `cpp/`. Logic only: no UI, and nothing here
+A port of the game logic in `cpp/stetris/`. Logic only: no UI, and nothing here
 reads a keyboard, a clock or a file. Standard library only, no packages to
 install.
 
@@ -11,7 +11,7 @@ make test
 or
 
 ```sh
-python3 test_logic.py
+python3 test/test_logic.py
 ```
 
 ## Use
