@@ -1,4 +1,4 @@
-# stetris - C++
+# S Tetris - C++
 
 The original implementation, and the one the other ports follow.
 

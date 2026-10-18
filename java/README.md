@@ -1,4 +1,4 @@
-# stetris - Java
+# S Tetris - Java
 
 A port of the game logic in `cpp/stetris/`. Logic only: no UI, and nothing here
 reads a keyboard, a clock or a file.

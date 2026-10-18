@@ -1,4 +1,4 @@
-# stetris
+# S Tetris
 
 Tetris, implemented four times over.
 
