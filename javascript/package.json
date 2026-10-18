@@ -1,7 +1,7 @@
 {
   "name": "stetris",
   "version": "1.0.0",
-  "description": "Stetris game logic, no UI",
+  "description": "S Tetris game logic, no UI",
   "type": "module",
   "main": "stetris/index.js",
   "private": true,
